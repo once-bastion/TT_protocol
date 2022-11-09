@@ -1,0 +1,2 @@
+# 禁止git推的依赖包
+/node_modules
