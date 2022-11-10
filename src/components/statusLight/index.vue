@@ -1,14 +1,33 @@
 <template>
-  <div :class="light===false?'':'light'"></div>
+  <div :class="status"></div>
 </template>
 
 <script>
   export default {
     name: "statusLight",
     props: {
-      light: Boolean,
+      light: Number,
       required: true
-    }
+    },
+    data() {
+      return {
+        status: ''
+      }
+    },
+    created() {
+      if (this.light === 0) {
+        this.status = ''
+      }
+      if (this.light === 1) {
+        this.status = 'success'
+      }
+      if (this.light === 2) {
+        this.status = 'warning'
+      }
+      if (this.light === 3) {
+        this.status = 'error'
+      }
+    },
   }
 </script>
 
@@ -22,7 +41,15 @@
     margin: auto;
   }
 
-  .light {
+  .success {
     background-color: #70b603;
+  }
+
+  .warning {
+    background-color: #f59a23;
+  }
+
+  .error {
+    background-color: #d9001b;
   }
 </style>

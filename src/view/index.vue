@@ -75,7 +75,7 @@
       }
     },
     mounted() {
-      console.log(this.$route.path.split('/')[1])
+      // console.log(this.$route.path.split('/')[1])
     },
     methods: {
       handleOpen(key, keyPath) {

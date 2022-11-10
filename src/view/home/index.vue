@@ -26,7 +26,7 @@
           <div class="data_rank">
             <div style="width:100%; height:400px;">
               <Echarts :option="i"></Echarts>
-              <!--              <echarts :option="dataRank[1]"></echarts>-->
+              <!--<echarts :option="dataRank[1]"></echarts>-->
             </div>
           </div>
         </el-col>
