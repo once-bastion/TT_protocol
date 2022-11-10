@@ -40,7 +40,7 @@
         </el-menu>
       </el-aside>
       <el-main>
-        <router-view></router-view>
+        <router-view/>
       </el-main>
     </el-container>
   </el-container>
@@ -52,7 +52,7 @@
     data() {
       return {
         username: 'admin',
-        activeIndex: 'home',
+        activeIndex: this.$route.path.split('/')[1],
         fromList: [
           {title: '首页', path: 'home', icon: 'el-icon-s-home',},
           {title: '设备管理', path: 'equipment', icon: 'el-icon-s-tools',},
@@ -73,6 +73,9 @@
           {title: '后台权限', path: 'backPermissions', icon: 'el-icon-s-platform',},
         ],
       }
+    },
+    mounted() {
+      console.log(this.$route.path.split('/')[1])
     },
     methods: {
       handleOpen(key, keyPath) {
@@ -123,11 +126,17 @@
   }
 
   .el-aside {
+    background-color: #545c64;
+
     .el-menu {
       border-right: 0;
       height: calc(100vh - 60px);
     }
   }
 
+  .el-main {
+    max-height: calc(100vh - 60px);
+    background-color: #f9f9f9;
+  }
 
 </style>

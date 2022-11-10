@@ -8,13 +8,13 @@ Router.prototype.push = function push(location) {
 }
 import index from '../view/index.vue'
 import home from '../view/home/index.vue'
-import equipment from '../view/home/index.vue'
-import account from '../view/home/index.vue'
-import createID from '../view/home/index.vue'
-import material from '../view/home/index.vue'
-import video from '../view/home/index.vue'
-import taskLog from '../view/home/index.vue'
-import backPermissions from '../view/home/index.vue'
+import equipment from '../view/equipment/index.vue'
+import account from '../view/account/index.vue'
+import createID from '../view/createID/index.vue'
+import material from '../view/material/index.vue'
+import video from '../view/video/index.vue'
+import taskLog from '../view/taskLog/index.vue'
+import backPermissions from '../view/backPermissions/index.vue'
 
 const router = new Router({
   routes: [
@@ -59,10 +59,6 @@ const router = new Router({
           path: '/backPermissions',
           component: backPermissions,
         },
-        // {
-        //   path: '/HelloWorld',
-        //   component: home,
-        // },
       ]
     },
   ]

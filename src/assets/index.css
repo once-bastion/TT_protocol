@@ -301,51 +301,48 @@ html .fixed {
   not supported by any browser */
 
 }
-  .scrollbarchange::-webkit-scrollbar {
-    /*滚动条整体样式*/
-    width: 5px; /*高宽分别对应横竖滚动条的尺寸*/
-    height: 1px;
-    position: absolute;
-    right: 0px;
-  }
-  .scrollbarchange::-webkit-scrollbar-thumb {
-    /*滚动条里面小方块*/
-    border-radius: 10px;
-    background: #e0e0e0;
-  }
-  .scrollbarchange::-webkit-scrollbar-track {
-    /*滚动条里面轨道*/
-    border-radius: 10px;
-    background: #f2f2f2;
-  }
+.scrollbarchange::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 5px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 1px;
+  position: absolute;
+  right: 0px;
+}
+.scrollbarchange::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 10px;
+  background: #e0e0e0;
+}
+.scrollbarchange::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  border-radius: 10px;
+  background: #f2f2f2;
+}
 
 /* 全局引入 滚动条 */
-
 ::-webkit-scrollbar {
-
-  width: 3px !important;
-
+  width: 6px !important;
   height: 3px !important;
-
 }
 
 ::-webkit-scrollbar-thumb {
-
   border-radius: 10px;
-
   width: 1px;
-
   background: rgba(0, 0, 0, 0.16);
-
 }
 /*
 ::-webkit-scrollbar-track {
-
   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-
   border-radius: 10px;
-
   background: rgba(255, 255, 255,1);
-
 }
 */
+
+th {
+  color: #333;
+  background-color:#d7d7d7 !important;
+}
+th > .cell,
+td > .cell{
+  text-align:center;
+}

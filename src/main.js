@@ -11,6 +11,8 @@ import ElementUI from 'element-ui';
 //引入ElementUI的所有样式
 import 'element-ui/lib/theme-chalk/index.css';
 //使用ElementUI
+
+
 Vue.use(ElementUI)
 
 Vue.prototype.$api = api
