@@ -15,19 +15,29 @@
       }
     },
     created() {
-      if (this.light === 0) {
-        this.status = ''
-      }
-      if (this.light === 1) {
-        this.status = 'success'
-      }
-      if (this.light === 2) {
-        this.status = 'warning'
-      }
-      if (this.light === 3) {
-        this.status = 'error'
-      }
+      this.showLight()
     },
+    methods: {
+      showLight() {
+        let shine = this.light
+        // console.log(shine)
+        if (shine == null) {
+          this.status = 'disabled'
+        }
+        if (shine === 0) {
+          this.status = ''
+        }
+        if (shine === 1) {
+          this.status = 'success'
+        }
+        if (shine === 2) {
+          this.status = 'warning'
+        }
+        if (shine === 3 || shine === 13) {
+          this.status = 'error'
+        }
+      }
+    }
   }
 </script>
 
@@ -51,5 +61,9 @@
 
   .error {
     background-color: #d9001b;
+  }
+
+  .disabled {
+    background-color: #7f7f7f;
   }
 </style>

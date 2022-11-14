@@ -11,7 +11,9 @@ import ElementUI from 'element-ui';
 //引入ElementUI的所有样式
 import 'element-ui/lib/theme-chalk/index.css';
 //使用ElementUI
+import axios from "axios"
 
+Vue.prototype.$axios = axios
 
 Vue.use(ElementUI)
 

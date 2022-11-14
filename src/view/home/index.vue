@@ -228,10 +228,6 @@
 </script>
 
 <style lang="less" scoped>
-  .title {
-    font-weight: 700;
-    font-size: 24px;
-  }
 
   /*信息模块*/
   .infos {

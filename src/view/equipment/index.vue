@@ -1,7 +1,7 @@
 <template>
   <div class="equipment">
     <!--  标题  -->
-    <div class="title">
+    <div class="title01">
       <span>{{equipment===false?'只显示在线设备':'显示全部设备'}}</span>
       <el-switch v-model="equipment" @change="equipStatus"></el-switch>
     </div>
@@ -151,7 +151,7 @@
   .equipment {
     padding: 70px;
 
-    .title {
+    .title01 {
       font-size: 18px;
       background-color: #fff;
       display: inline-flex;

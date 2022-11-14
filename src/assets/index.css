@@ -384,3 +384,32 @@ td > .cell {
     padding-left: 14px;
     padding-right: 14px;
 }
+
+/* 浮动手势动画 */
+.head, .headBtn {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.head:hover {
+    opacity: .8;
+    text-decoration: underline;
+}
+
+.headBtn:hover {
+    opacity: .7;
+}
+/*横向和竖向*/
+.scrollable-x,
+.scrollable-y {
+    display: inline-flex;
+}
+
+.scrollable-y {
+    flex-direction: column;
+}
+/*标题字体大小*/
+.title {
+    font-weight: 700;
+    font-size: 24px;
+}

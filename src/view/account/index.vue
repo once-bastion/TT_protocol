@@ -1,23 +1,26 @@
 <template>
   <div class="equipment">
     <!--  标题  -->
-    <div class="title">
+    <div class="title01">
       <el-button type="primary" @click="deleteFromData">删除</el-button>
       <el-button type="warning" style="margin-right: 30px;">离线</el-button>
       <el-input style="margin:0 30px;"
-                placeholder="请输入内容"
+                placeholder="请输入账户名称或昵称"
                 v-model="input"
                 clearable>
       </el-input>
       <el-button type="primary" icon="el-icon-search">搜索</el-button>
-
-
+      <light-btn :colors="btns" @lightByValue="lightByValue"></light-btn>
+      <div class="btns all headBtn" @click="lightByValue(0)">
+        <span>显示全部</span>
+      </div>
     </div>
     <!--表格-->
     <el-col :span="24">
       <el-table
           border
-          :data="tableData" @selection-change="handleSelectionChange"
+          :data="tableData"
+          @selection-change="handleSelectionChange"
           style="width: 100%;margin-top:30px">
         <el-table-column
             type="selection"
@@ -34,7 +37,7 @@
             width="90">
         </el-table-column>
         <el-table-column
-            prop="id"
+            prop="equipmentID"
             label="设备ID"
             width="100">
         </el-table-column>
@@ -55,7 +58,10 @@
             label="头像"
             width="100">
           <template slot-scope="scope">
-            <img style="width: 50px;" :src="scope.row.head" alt="">
+            <el-image
+                style="width: 60px;height: 60px;"
+                :src="scope.row.head"
+                fit="cover"></el-image>
           </template>
         </el-table-column>
         <el-table-column
@@ -78,6 +84,11 @@
             label="操作">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="primary" size="small">编辑账户</el-button>
+            <el-switch style="margin-left: 20px;"
+                       v-model="scope.row.value"
+                       active-color="#13ce66"
+                       inactive-color="#d7d7d7" @change="operation(scope.row)">
+            </el-switch>
           </template>
         </el-table-column>
       </el-table>
@@ -98,79 +109,98 @@
 <script>
   import statusLight from "../../components/statusLight";
   import mountNum from "../../components/mountNum";
+  import LightBtn from "../../components/statusLight/lightBtn";
 
   export default {
     name: "index",
     components: {
+      LightBtn,
       statusLight, mountNum,
     },
     data() {
       return {
-        input: '',
+        input: '',// 搜索框数据
         equipment: false,
+        btns: [1, 2, 3],// 1代表绿灯,2代表黄灯,3代表红灯,其余灰色
         tableData: [
           {
             username: '10001',
             password: '123456',
-            id: '10001',
+            id: 0,
+            equipmentID: '10001',
             name: 'dfsghsd',
             status: 1,
             head: 'https://i02piccdn.sogoucdn.com/82f1b297ad5dcd48',
             number: '90/90/90',
             sign: '2333333',
-            video: '300'
-          }, {
+            video: '300',
+            value: true,
+          },
+          {
             username: '10001',
             password: '123456',
-            id: '10001',
+            id: 1,
+            equipmentID: '10002',
             name: 'dfsghsd',
             status: 2,
-            head: 'https://pic1.zhimg.com/v2-6714b4912885f481d11776147a672fe0_b.jpg',
+            head: 'http://img.duoziwang.com/2018/20/07211700202853.jpg',
             number: '90/90/90',
             sign: '2333333',
-            video: '300'
-          }, {
+            video: '300',
+            value: true,
+          },
+          {
             username: '10001',
             password: '123456',
-            id: '10001',
+            id: 2,
+            equipmentID: '10003',
             name: 'dfsghsd',
             status: 1,
-            head: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG3Ohe8XLVo4rh8evm8QTHYRUCm7ZqBiR6Y4SJlcw&s',
+            head: 'https://cdnimg.gamekee.com/images/touhoulostword/1590626787410_14115288.png',
             number: '90/90/90',
             sign: '2333333',
-            video: '300'
-          }, {
-            username: '10001',
+            video: '300',
+            value: true,
+          },
+          {
+            username: '10004',
             password: '123456',
-            id: '10001',
+            id: 3,
+            equipmentID: '10001',
             name: 'dfsghsd',
             status: 1,
-            head: 'https://gw.alicdn.com/i4/710600684/O1CN01BSkFT41GvJe0mLJBv_!!710600684.jpg_Q75.jpg_.webp',
+            head: 'https://inews.gtimg.com/newsapp_bt/0/13094567333/641',
             number: '90/90/90',
             sign: '2333333',
-            video: '300'
-          }, {
-            username: '10001',
+            video: '300',
+            value: true,
+          },
+          {
+            username: '10005',
             password: '123456',
-            id: '10001',
+            id: 4,
+            equipmentID: '10001',
             name: 'dfsghsd',
             status: 3,
             head: 'https://i02piccdn.sogoucdn.com/b7aab9d95658a1af',
             number: '90/90/90',
             sign: '2333333',
-            video: '300'
-          }, {
-            username: '10001',
+            video: '300',
+            value: true,
+          },
+          {
+            username: '10006',
             password: '123456',
-            id: '10001',
+            id: 5,
+            equipmentID: '10001',
             name: 'dfsghsd',
             status: 1,
-            head: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQE4GSgSokloDWq91MkkecsXaW5mSmeIjuH7D3D53JpjA&s',
+            head: 'https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2022%2F0513%2F38b56e80j00rbsuc5006tc001jk013zm.jpg&thumbnail=660x2147483647&quality=80&type=jpg',
             number: '90/90/90',
             sign: '2333333',
-            video: '300'
+            video: '300',
+            value: true,
           },
-
         ],
         total: 1000, //总页数
         multipleSelection: [],
@@ -179,6 +209,9 @@
     mounted() {
     },
     methods: {
+      lightByValue(i) {
+        console.log(i)
+      },
       // 更改每页条数时触发
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
@@ -194,7 +227,13 @@
       },
       handleSelectionChange(val) {
         console.log(val)
-        this.multipleSelection = val;
+        val.forEach((e, el) => {
+          // console.log(e.id)
+          console.log(e, el)
+        })
+      },
+      operation(val) {
+        console.log(val)
       }
     },
   }
@@ -204,7 +243,7 @@
   .equipment {
     padding: 70px;
 
-    .title {
+    .title01 {
       font-size: 18px;
       display: inline-flex;
       align-items: center;
@@ -215,5 +254,20 @@
       }
     }
 
+    .all {
+      justify-content: center;
+      background-color: #d7d7d7;
+      width: 100%;
+      margin-left: 10px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      border: 1px solid #7a7a7a;
+      border-radius: 10px;
+      span {
+        text-align: center;
+        margin: 0;
+      }
+    }
   }
 </style>
