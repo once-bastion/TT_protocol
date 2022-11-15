@@ -11,17 +11,16 @@ import ElementUI from 'element-ui';
 //引入ElementUI的所有样式
 import 'element-ui/lib/theme-chalk/index.css';
 //使用ElementUI
-import axios from "axios"
-
-Vue.prototype.$axios = axios
+import config from './request/config'
 
 Vue.use(ElementUI)
 
 Vue.prototype.$api = api
+Vue.prototype.$config_upLoad = config.url + "Base/upload"//封装上传的接口
 Vue.use(VueRouter)
 Vue.config.productionTip = false
 
 new Vue({
   render: h => h(App),
-  router:router
+  router: router
 }).$mount('#app')

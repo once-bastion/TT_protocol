@@ -13,7 +13,8 @@
     name: "upLoadPop",
     data() {
       return {
-        options: [], valueData: '',
+        options: [],
+        valueData: '',
       };
     },
     mounted() {
@@ -24,16 +25,12 @@
         this.getType(parseInt(val[0]))
       },
       async getType(pid) {
-        await this.$axios
-          .post(
-            'http://192.168.3.30/api/Typecontrol/index',
-            {
-              pid,
-            },
-            {
-              params: {},
-            }
-          )
+        this.$api.typecontrol({
+            pid,
+          },
+          {
+            params: {},
+          })
           .then((res) => {
             if (pid === 0) {
               res.data.data.list.forEach((e, index) => {

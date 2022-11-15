@@ -13,8 +13,10 @@
       <div style="margin-top: 20px;">
         <el-col :span="4">
           <strong style="margin-right: 20px;">根据时间排序</strong>
-          <el-button @click="getImgs('add_time','asc')" size="mini" round icon="el-icon-arrow-down">升序</el-button>
-          <el-button @click="getImgs('add_time','desc')" size="mini" round icon="el-icon-arrow-up">降序</el-button>
+          <el-button @click="getImgs('add_time','asc','',1,12)" size="mini" round icon="el-icon-arrow-down">升序
+          </el-button>
+          <el-button @click="getImgs('add_time','desc','',1,12)" size="mini" round icon="el-icon-arrow-up">降序
+          </el-button>
         </el-col>
         <!--  创建新号数量 输入框  -->
         <el-col :span="6" style="display: flex">
@@ -40,7 +42,7 @@
       <el-upload
           class="upload-demo" style="margin-top: 10px"
           drag
-          action="http://192.168.3.30/api/Base/upload"
+          :action="this.$config_upLoad"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload">
         <i class="el-icon-upload"></i>
@@ -51,7 +53,7 @@
       <el-upload
           class="upload-demo" style="margin-top: 10px"
           drag
-          action="http://192.168.3.30/api/Base/upload"
+          :action="this.$config_upLoad"
           :on-success="handleAvatarSuccess02"
           :before-upload="beforeAvatarUpload02">
         <i class="el-icon-upload"></i>
@@ -82,31 +84,28 @@
         count: null,
         dialogVisible: false,
         imageUrl: '',
-        pic:'',
+        pic: '',
         type_id: null,
         video_url: '',
       }
     },
     mounted() {
       this.getImgs('', '', '', 1, 12)
+
+      console.log(this.$config_upLoad)
     },
     methods: {
       async getImgs(order, sort, video_num, page, limit) {
-        // order 排序字段 sort 排序方式 video_num 视频编号  limit 每页数量 page 页码
-        await this.$axios
-          .post(
-            'http://192.168.3.30/api/material/index',
-            {
-              order,
-              sort,
-              video_num,
-              page,
-              limit,
-            },
-            {
-              params: {},
-            }
-          )
+        this.$api.material({
+            order,
+            sort,
+            video_num,
+            page,
+            limit,
+          },
+          {
+            params: {},
+          })
           .then((res) => {
             this.picInfos = []
             // console.log(res)
@@ -124,21 +123,16 @@
         await this.getImgs('', '', '', 1, 12)
       },
       async upLoadAdd() {
-        await this.$axios
-          .post(
-            'http://192.168.3.30/api/Material/add',
-            {
-              pic: this.pic,
-              typecontrol_id: this.type_id,
-              video_url: this.video_url,
-            },
-            {
-              params: {},
-            }
-          )
-          .then((res) => {
-            console.log(res)
-          })
+        this.$api.material_add({
+            pic: this.pic,
+            typecontrol_id: this.type_id,
+            video_url: this.video_url,
+          },
+          {
+            params: {},
+          }).then((res) => {
+          console.log(res)
+        })
           .catch((error) => {
             this.$message.error('请求错误')
           })
@@ -183,18 +177,13 @@
         return isVideo && isLt10M;
       },
       async removeData(material_ids) {
-        // console.log(i)
-        // this.getImgs('', '', '', i)
-        await this.$axios
-          .post(
-            'http://192.168.3.30/api/material/delete',
-            {
-              material_ids,
-            },
-            {
-              params: {},
-            }
-          )
+        this.$api.material_del({
+            material_ids,
+          },
+          {
+            params: {},
+          }
+        )
           .then((res) => {
             console.log(res)
             this.$message.success(res.data.msg)
