@@ -11,12 +11,14 @@
     <el-col class="videoList" :span="24" style="margin: 15px 0;">
       <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
         <!--图像显示区域-->
-        <el-image v-for="(i,index) in infos"
-                  v-on:click="toVideo(index)"
-                  style="width: 207px; height: 368px;border: 10px solid #ccc;margin: 10px 35px 50px 0;z-index:2;"
-                  :src="i.pic"
-                  fit="cover">
-        </el-image>
+        <div v-for="(i,index) in infos" style="display: inline-block;position:relative;">
+
+          <el-image class="head pics"
+                    @click="toVideo(i)"
+                    :src="i.pic"
+                    fit="cover">
+          </el-image>
+        </div>
         <div class="checkbox">
           <el-checkbox v-for="(i,index) in lists" :label="i" :key="i" style="margin-bottom: 10px">
             <!--          <el-image-->
@@ -29,7 +31,6 @@
                 <span>视频编号：{{infos[index].video_num}}</span>
                 <span>上传时间：{{infos[index].add_time}}</span></div>
             </div>
-
           </el-checkbox>
         </div>
       </el-checkbox-group>
@@ -45,15 +46,28 @@
           @current-change="handleCurrentChange">
       </el-pagination>
     </el-col>
+    <!--  弹出框内容  -->
+    <el-dialog
+        title="视频内容"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose" :on-success="handleAvatarSuccess">
+      <!--   视频内容   -->
+      <vue-core-video-player loop :src="source" :cover="cover" :title="title" autoplay></vue-core-video-player>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   // const cityOptions = ['上海','上海', '北京', '广州', '深圳'];
+  import VueCoreVideoPlayer from "../vueVideo/VueCoreVideoPlayer";
+
   export default {
     name: "videoList",
+    components: {VueCoreVideoPlayer},
     props: {
-      infos: Array, total: Number,
+      infos: Array,
+      total: Number,
       required: true,
     },
     data() {
@@ -66,9 +80,15 @@
         xx: null,
         delDisabled: true,
         deleteData: [],//需要删除的
+        dialogVisible: false,
+        //视频模块数据-----------------
+        source: '',
+        title: '',
+        cover: 'cover',
       }
     },
     created() {
+      console.log(this.infos)
     },
     methods: {
       handleCheckAllChange(val) {
@@ -95,9 +115,25 @@
         this.$emit('pageChange', pageVal)
       },
       toVideo(n) {
-        // console.log(n)
+        console.log(n)
+        this.source = n.video_url
+        this.title = '视频编号：' + n.video_num
+        this.dialogVisible = true
       },
-      deleteBtn: function () {
+      handleClose(done) {
+        // this.$confirm('确认关闭？')
+        //   .then(_ => {
+        done();
+        // })
+        // .catch(_ => {
+        // });
+      },
+      async handleAvatarSuccess(res, file) {
+        // this.imageUrl = URL.createObjectURL(file.raw);
+        console.log(res)
+        this.pic = res.data
+      },
+      deleteBtn() {
         // console.log(this.deleteData)
         this.deleteData.forEach((e, index) => {
           var i = [];
@@ -136,15 +172,10 @@
     }
   }
 
-  /*/deep/ .videoList .el-checkbox__inner {*/
-  /*  position: absolute;*/
-  /*  left: 25px;*/
-  /*  top: -805px;*/
-  /*}*/
-
-  /*.checkbox {*/
-  /*  .el-checkbox {*/
-  /*    margin-right: 25px;*/
-  /*  }*/
-  /*}*/
-</style>
+  .pics {
+    width: 207px;
+    height: 368px;
+    border: 10px solid #ccc;
+    margin: 10px 35px 50px 0;
+    z-index: 2;
+  }</style>

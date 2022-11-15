@@ -23,6 +23,10 @@
     methods: {
       changeFrom(val) {
         this.getType(parseInt(val[0]))
+        console.log(parseInt(val[0]))
+        let n = parseInt(val[0])
+
+        this.$emit('typeId_first', n)
       },
       async getType(pid) {
         this.$api.typecontrol({
@@ -48,19 +52,22 @@
                   let key = 'children'
                   let value = res.data.data.list
                   this.options[index][key] = value
+                  console.log(this.options)
                 }
               })
-              console.log(this.options)
+              // console.log(this.options)
             }
           })
           .catch((error) => {
             this.$message.error('请求错误')
           })
       },
-      getChecked() {
+      getChecked(val) {
+        console.log(val)
+        console.log(this.valueData)
         let i = this.valueData
         let n = parseInt(i[i.length - 1])
-        this.$emit('typeId', n)
+        this.$emit('typeId_second', n)
       },
     },
   }

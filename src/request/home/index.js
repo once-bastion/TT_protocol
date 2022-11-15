@@ -44,6 +44,48 @@ let material_del = (data) => {
     data
   })
 }
+let headImage = (data) => {
+  return http({
+    method: 'POST',
+    url: '/Headimage/index',
+    data
+  })
+}
+let head_image_add = (data) => {
+  return http({
+    method: 'POST',
+    url: '/Headimage/add',
+    data
+  })
+}
+let nickName = (data) => {
+  return http({
+    method: 'POST',
+    url: '/Nickname/index',
+    data
+  })
+}
+let nickName_add = (data) => {
+  return http({
+    method: 'POST',
+    url: '/Nickname/add',
+    data
+  })
+}
+let autograph = (data) => {
+  return http({
+    method: 'POST',
+    url: '/Autograph/index',
+    data
+  })
+}
+let autograph_add = (data) => {
+  return http({
+    method: 'POST',
+    url: '/Autograph/add',
+    data
+  })
+}
 
 
 export default {
@@ -53,4 +95,10 @@ export default {
   typecontrol,
   material_add,
   material_del,
+  headImage,
+  head_image_add,
+  nickName,
+  nickName_add,
+  autograph,
+  autograph_add,
 }

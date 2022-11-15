@@ -12,6 +12,9 @@ import equipment from '../view/equipment/index.vue'
 import account from '../view/account/index.vue'
 import createID from '../view/createID/index.vue'
 import material from '../view/material/index.vue'
+import headImg from '../view/headImg/index.vue'
+import nickName from '../view/nickName/index.vue'
+import sign from '../view/sign/index.vue'
 import video from '../view/video/index.vue'
 import taskLog from '../view/taskLog/index.vue'
 import backPermissions from '../view/backPermissions/index.vue'
@@ -46,6 +49,18 @@ const router = new Router({
         {
           path: '/material',
           component: material,
+        },
+        {
+          path: '/headImg',
+          component: headImg,
+        },
+        {
+          path: '/nickName',
+          component: nickName,
+        },
+        {
+          path: '/sign',
+          component: sign,
         },
         {
           path: '/video',

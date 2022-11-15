@@ -11,12 +11,17 @@
       </div>
       <!--   时间排序模块   -->
       <div style="margin-top: 20px;">
-        <el-col :span="4">
-          <strong style="margin-right: 20px;">根据时间排序</strong>
+        <el-col :span="6">
+          <strong class="title01">根据时间排序：</strong>
           <el-button @click="getImgs('add_time','asc','',1,12)" size="mini" round icon="el-icon-arrow-down">升序
           </el-button>
           <el-button @click="getImgs('add_time','desc','',1,12)" size="mini" round icon="el-icon-arrow-up">降序
           </el-button>
+        </el-col>
+        <!--  种类选择的下拉框  -->
+        <el-col :span="6" style="display: flex;align-items: center;">
+          <strong class="title01">视频种类：</strong>
+          <up-load-pop @typeId_first="typeId" @typeId_second="typeId"></up-load-pop>
         </el-col>
         <!--  创建新号数量 输入框  -->
         <el-col :span="6" style="display: flex">
@@ -32,16 +37,18 @@
     <el-col :span="24">
       <video-list :infos="picInfos" :total="count" @remove="removeData" @pageChange="pageChange"></video-list>
     </el-col>
+    <!--  弹出框内容  -->
     <el-dialog
         title="上传该视频"
         :visible.sync="dialogVisible"
         width="30%"
         :before-close="handleClose" :on-success="handleAvatarSuccess">
       <span>这个视频的类型：</span>
-      <up-load-pop @typeId="typeId"></up-load-pop>
+      <dialogsPop></dialogsPop>
+      <up-load-pop @typeId_first="typeId" @typeId_second="typeId"></up-load-pop>
       <el-upload
           class="upload-demo" style="margin-top: 10px"
-          drag
+          drag list-type="picture"
           :action="this.$config_upLoad"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload">
@@ -72,10 +79,11 @@
   import uploadFile from '../../components/uploadFile'
   import VideoList from "../../components/video/videoList";
   import UpLoadPop from "./pop/upLoadPop";
+  import dialogsPop from "./pop/dialogsPop";
 
   export default {
     name: "index",
-    components: {UpLoadPop, VideoList, uploadFile,},
+    components: {UpLoadPop, VideoList, uploadFile,dialogsPop},
     data() {
       return {
         numsInfo: [{value: '视频数量', key: '5000',},],
@@ -92,16 +100,17 @@
     mounted() {
       this.getImgs('', '', '', 1, 12)
 
-      console.log(this.$config_upLoad)
+      // console.log(this.$config_upLoad)
     },
     methods: {
-      async getImgs(order, sort, video_num, page, limit) {
+      async getImgs(order, sort, video_num, page, limit, typecontrol_id) {
         this.$api.material({
             order,
             sort,
             video_num,
             page,
             limit,
+            typecontrol_id
           },
           {
             params: {},
@@ -119,32 +128,52 @@
       },
       async sure() { // 确定按钮
         await this.upLoadAdd()
-        this.dialogVisible = false
         await this.getImgs('', '', '', 1, 12)
       },
       async upLoadAdd() {
-        this.$api.material_add({
-            pic: this.pic,
-            typecontrol_id: this.type_id,
-            video_url: this.video_url,
-          },
-          {
-            params: {},
-          }).then((res) => {
-          console.log(res)
-        })
-          .catch((error) => {
-            this.$message.error('请求错误')
+        console.log(!this.pic)
+        console.log(!this.type_id)
+        console.log(!this.video_url)
+        if (!this.pic || !this.type_id || !this.video_url) {
+          this.$confirm('请完成上述操作')
+            .then(_ => {
+          done();
           })
+          .catch(_ => {
+          });
+        } else {
+          this.$api.material_add({
+              pic: this.pic,
+              typecontrol_id: this.type_id,
+              video_url: this.video_url,
+            },
+            {
+              params: {},
+            }).then((res) => {
+            console.log(res)
+
+          this.dialogVisible = false
+          })
+            .catch((error) => {
+              this.$message.error('请求错误')
+            })
+        }
       },
       typeId(i) {
         this.type_id = i
         console.log(this.type_id)
+        this.getImgs('', '', '', 1, 12, this.type_id)
       },
       async handleAvatarSuccess(res, file) {
         // this.imageUrl = URL.createObjectURL(file.raw);
         console.log(res)
         this.pic = res.data
+        this.$confirm('确认关闭？')
+          .then(_ => {
+        done();
+        })
+        .catch(_ => {
+        });
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type.split('/')[0] === 'image';
@@ -200,17 +229,22 @@
         this.dialogVisible = true
       },
       handleClose(done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done();
-          })
-          .catch(_ => {
-          });
+        // this.$confirm('确认关闭？')
+        //   .then(_ => {
+        done();
+        // })
+        // .catch(_ => {
+        // });
       },
     }
   }
 </script>
 
 <style scoped>
-
+  .title01 {
+    font-size: 18px;
+    margin-right: 10px;
+    height: 40px;
+    line-height: 40px;
+  }
 </style>

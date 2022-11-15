@@ -52,7 +52,14 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     function(response) {
         // 对响应数据做点什么
-        if (response.status == 200) {
+        if (response.status === 200) {
+            // console.log(response.data)
+            if (response.data.status!=='200'){
+                MessageBox.alert(response.data.msg, '错误', {
+                    confirmButtonText: "确定",
+                    type: "error",
+                })
+            }
             // if (response.data.code != 0) {
             //     MessageBox.alert(response.data.msg, '错误', {
             //         confirmButtonText: "确定",

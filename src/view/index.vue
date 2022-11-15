@@ -62,7 +62,18 @@
             icon: 'el-icon-user-solid',
             secondTitle: [{title: '账户管理', path: 'account'}, {title: '创建新号', path: 'createID'},]
           },
-          {title: '素材管理', path: 'material', icon: 'el-icon-picture',},
+          // {title: '素材管理', path: 'material', icon: 'el-icon-picture',},
+          {
+            title: '素材管理',
+            path: 'material',
+            icon: 'el-icon-picture',
+            secondTitle: [
+              {title: '视频素材', path: 'material'},
+              {title: '头像', path: 'headImg'},
+              {title: '昵称', path: 'nickName'},
+              {title: '个性签名', path: 'sign'},
+            ]
+          },
           {
             title: '任务管理',
             path: 'task',

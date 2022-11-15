@@ -1,5 +1,5 @@
 <template>
-  <el-col :span="6" class="title01">
+  <el-col :span="4" class="title01">
     <strong>{{value}}：{{keys}}</strong>
     <el-button type="primary" size="mini" round @click="upLoad">上传</el-button>
   </el-col>
