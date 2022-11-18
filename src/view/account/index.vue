@@ -1,5 +1,17 @@
 <template>
   <div class="equipment">
+    <!--  弹框组件  -->
+    <el-dialog
+        :title="title"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose">
+      <span>这是一段信息</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
     <!--  标题  -->
     <div class="title01">
       <el-button type="primary" @click="deleteFromData">删除</el-button>
@@ -210,6 +222,9 @@
         ],
         total: 1000, //总页数
         multipleSelection: [],
+
+        title:'',
+        dialogVisible: false,
       }
     },
     mounted() {
@@ -229,6 +244,12 @@
       },
       handleClick(row) {
         console.log(row);
+        this.dialogVisible = true
+        this.title = '查看详细内容'
+      },
+      handleClose(done) {
+        done();
+        this.dialogVisible = false
       },
       deleteFromData(row) {
       },
@@ -271,6 +292,7 @@
       align-items: center;
       border: 1px solid #7a7a7a;
       border-radius: 10px;
+
       span {
         text-align: center;
         margin: 0;
