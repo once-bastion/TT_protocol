@@ -42,27 +42,20 @@
         title="上传该视频"
         :visible.sync="dialogVisible"
         width="30%"
-        :before-close="handleClose" :on-success="handleAvatarSuccess">
+        :before-close="handleClose">
       <span>这个视频的类型：</span>
-      <dialogsPop></dialogsPop>
+      <!--   下拉框新方法   -->
+      <!--      <dialogsPop></dialogsPop>-->
       <up-load-pop @typeId_first="typeId" @typeId_second="typeId"></up-load-pop>
       <el-upload
-          class="upload-demo" style="margin-top: 10px"
-          drag list-type="picture"
-          :action="this.$config_upLoad"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将图片拖到此处，或<em>点击上传</em></div>
-        <!--        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过4M</div>-->
-      </el-upload>
-
-      <el-upload
-          class="upload-demo" style="margin-top: 10px"
+          class="upload-demo"
           drag
           :action="this.$config_upLoad"
-          :on-success="handleAvatarSuccess02"
-          :before-upload="beforeAvatarUpload02">
+          multiple
+          style="margin-top: 10px"
+          :on-error="handleAvatarError"
+          :on-success="handleAvatarSuccess">
+<!--          :before-upload="beforeAvatarUpload">-->
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将视频拖到此处，或<em>点击上传</em></div>
         <!--        <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过4M</div>-->
@@ -83,7 +76,7 @@
 
   export default {
     name: "index",
-    components: {UpLoadPop, VideoList, uploadFile,dialogsPop},
+    components: {UpLoadPop, VideoList, uploadFile, dialogsPop},
     data() {
       return {
         numsInfo: [{value: '视频数量', key: '5000',},],
@@ -92,7 +85,7 @@
         count: null,
         dialogVisible: false,
         imageUrl: '',
-        pic: '',
+        pic: [],
         type_id: null,
         video_url: '',
       }
@@ -117,33 +110,31 @@
           })
           .then((res) => {
             this.picInfos = []
-            // console.log(res)
             this.picInfos = res.data.data.list
+            console.log(this.picInfos)
             this.count = res.data.data.count
             this.numsInfo[0].key = res.data.data.count
           })
-          .catch((error) => {
-            this.$message.error('请求错误')
-          })
+          // .catch((error) => {
+          //   this.$message.error('请求错误')
+          // })
       },
       async sure() { // 确定按钮
         await this.upLoadAdd()
         await this.getImgs('', '', '', 1, 12)
       },
       async upLoadAdd() {
-        console.log(!this.pic)
         console.log(!this.type_id)
         console.log(!this.video_url)
-        if (!this.pic || !this.type_id || !this.video_url) {
+        if (!this.type_id || !this.video_url) {
           this.$confirm('请完成上述操作')
             .then(_ => {
-          done();
-          })
-          .catch(_ => {
-          });
+              done();
+            })
+            .catch(_ => {
+            });
         } else {
           this.$api.material_add({
-              pic: this.pic,
               typecontrol_id: this.type_id,
               video_url: this.video_url,
             },
@@ -151,59 +142,80 @@
               params: {},
             }).then((res) => {
             console.log(res)
-
-          this.dialogVisible = false
+            this.dialogVisible = false
+            this.$router.go(0)
           })
-            .catch((error) => {
-              this.$message.error('请求错误')
-            })
+            // .catch((error) => {
+            //   this.$message.error('请求错误')
+            // })
         }
       },
       typeId(i) {
         this.type_id = i
         console.log(this.type_id)
-        this.getImgs('', '', '', 1, 12, this.type_id)
+        this.getImgs()
       },
-      async handleAvatarSuccess(res, file) {
+      // async handleAvatarSuccess(res, file) {
+      //   // this.imageUrl = URL.createObjectURL(file.raw);
+      //   // console.log(res)\
+      //   // this.$confirm('确认关闭？')
+      //   if (res.status == 200) {
+      //     this.pic.push(res.data)
+      //     console.log(this.pic)
+      //     // this.video_url =this.pic.toLocaleString()
+      //     // console.log(this.video_url)
+      //   } else {
+      //     this.$confirm(res.msg)
+      //       .then(_ => {
+      //         done();
+      //       })
+      //       .catch(_ => {
+      //       });
+      //   }
+      // },
+      // beforeAvatarUpload(file) {
+      //   const isJPG = file.type.split('/')[0] === 'image';
+      //   const isLt2M = file.size / 1024 / 1024 < 2;
+      //
+      //   if (!isJPG) {
+      //     this.$message.error('只能上传图像格式!');
+      //   }
+      //   if (!isLt2M) {
+      //     this.$message.error('上传图像图片大小不能超过 2MB!');
+      //   }
+      //   return isJPG && isLt2M;
+      // },
+      handleAvatarError(err, file, fileList){
+        console.log(err, file, fileList)
+      },
+      handleAvatarSuccess(res, file) {
         // this.imageUrl = URL.createObjectURL(file.raw);
-        console.log(res)
-        this.pic = res.data
-        this.$confirm('确认关闭？')
-          .then(_ => {
-        done();
-        })
-        .catch(_ => {
-        });
+        if (res.status == 200) {
+          this.pic.push(res.data)
+          console.log(this.pic)
+          this.video_url = this.pic.toLocaleString()
+          console.log(this.video_url)
+        } else {
+          this.$message.error(res.msg)
+            .then(_ => {
+              done();
+            })
+            .catch(_ => {
+            });
+        }
       },
       beforeAvatarUpload(file) {
-        const isJPG = file.type.split('/')[0] === 'image';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
-        if (!isJPG) {
-          this.$message.error('只能上传图像格式!');
-        }
-        if (!isLt2M) {
-          this.$message.error('上传图像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
-      },
-      async handleAvatarSuccess02(res, file) {
-        // this.imageUrl = URL.createObjectURL(file.raw);
-        console.log(res)
-        this.video_url = res.data
-      },
-      beforeAvatarUpload02(file) {
         // console.log(file.type.split('/')[0])
         const isVideo = file.type.split('/')[0] === 'video';
-        const isLt10M = file.size / 1024 / 1024 < 10;
+        // const isLt600M = file.size / 1024 / 1024 < 600;
 
         if (!isVideo) {
           this.$message.error('只能上传视频格式!');
         }
-        if (!isLt10M) {
-          this.$message.error('上传视频文件大小不能超过 10MB!');
-        }
-        return isVideo && isLt10M;
+        // if (!isLt600M) {
+        //   this.$message.error('上传视频文件大小不能超过 600MB!');
+        // }
+        return isVideo ;
       },
       async removeData(material_ids) {
         this.$api.material_del({
@@ -216,7 +228,8 @@
           .then((res) => {
             console.log(res)
             this.$message.success(res.data.msg)
-            this.getImgs()
+            // this.getImgs()
+            this.$router.go(0)
           })
           .catch((error) => {
             this.$message.error('请求错误')

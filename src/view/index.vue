@@ -68,6 +68,7 @@
             path: 'material',
             icon: 'el-icon-picture',
             secondTitle: [
+              {title: '类别修改', path: 'category'},
               {title: '视频素材', path: 'material'},
               {title: '头像', path: 'headImg'},
               {title: '昵称', path: 'nickName'},

@@ -30,6 +30,34 @@ let typecontrol = (data) => {
     data
   })
 }
+let typecontrol_list = (data) => {
+  return http({
+    method: 'POST',
+    url: '/Typecontrol/indexlist',
+    data
+  })
+}
+let typecontrol_add = (data) => {
+  return http({
+    method: 'POST',
+    url: '/Typecontrol/add',
+    data
+  })
+}
+let typecontrol_softDel = (data) => {
+  return http({
+    method: 'POST',
+    url: '/Typecontrol/Soft_deletion',
+    data
+  })
+}
+let typecontrol_del = (data) => {
+  return http({
+    method: 'POST',
+    url: '/Typecontrol/delete',
+    data
+  })
+}
 let material_add = (data) => {
   return http({
     method: 'POST',
@@ -58,6 +86,13 @@ let head_image_add = (data) => {
     data
   })
 }
+let head_image_del = (data) => {
+  return http({
+    method: 'POST',
+    url: '/Headimage/delete',
+    data
+  })
+}
 let nickName = (data) => {
   return http({
     method: 'POST',
@@ -69,6 +104,13 @@ let nickName_add = (data) => {
   return http({
     method: 'POST',
     url: '/Nickname/add',
+    data
+  })
+}
+let nickName_del = (data) => {
+  return http({
+    method: 'POST',
+    url: '/Nickname/delete',
     data
   })
 }
@@ -86,6 +128,13 @@ let autograph_add = (data) => {
     data
   })
 }
+let autograph_del = (data) => {
+  return http({
+    method: 'POST',
+    url: '/Autograph/delete',
+    data
+  })
+}
 
 
 export default {
@@ -93,12 +142,19 @@ export default {
   // addvip,
   material,
   typecontrol,
+  typecontrol_list,
+  typecontrol_add,
+  typecontrol_softDel,
+  typecontrol_del,
   material_add,
   material_del,
   headImage,
   head_image_add,
+  head_image_del,
   nickName,
   nickName_add,
+  nickName_del,
   autograph,
   autograph_add,
+  autograph_del,
 }

@@ -1,12 +1,13 @@
 <template>
   <div class="scrollable-x">
     <div class="btns headBtn" v-for="(i,index) in colors" @click="btnData(i)">
-      <status-light :light="i"></status-light>
-      <span v-if="i===1">仅显示在线</span>
-      <span v-if="i===2">仅显示离线</span>
-      <span v-if="i===3">仅显示异常</span>
-      <span v-if="i===null">未启用</span>
-      <span v-if="i===13">已禁用</span>
+      <status-light :light="i.status"></status-light>
+<!--      <span v-if="i===1">仅显示在线</span>-->
+<!--      <span v-if="i===2">仅显示离线</span>-->
+<!--      <span v-if="i===3">仅显示异常</span>-->
+<!--      <span v-if="i===null">未启用</span>-->
+<!--      <span v-if="i===13">已禁用</span>-->
+      <span>{{i.value}}</span>
     </div>
 
   </div>
@@ -27,7 +28,7 @@
       return {}
     },
     mounted() {
-      // console.log(this.colors)
+      console.log(this.colors)
     },
     methods: {
       btnData(i) {

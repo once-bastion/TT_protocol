@@ -98,6 +98,7 @@
       <el-pagination
           background
           layout="prev, pager, next"
+          :page-size="12"
           :total="total"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange">
@@ -121,7 +122,12 @@
       return {
         input: '',// 搜索框数据
         equipment: false,
-        btns: [1, 2, 3],// 1代表绿灯,2代表黄灯,3代表红灯,其余灰色
+        btns: [
+          {status: 1, value: '仅显示在线'},
+          {status: 4, value: '仅显示离线'},
+          {status: 3, value: '仅显示异常'},
+        ],// 1代表绿灯,2代表黄灯,3代表红灯,其余灰色
+
         tableData: [
           {
             username: '10001',
@@ -142,7 +148,7 @@
             id: 1,
             equipmentID: '10002',
             name: 'dfsghsd',
-            status: 2,
+            status: 4,
             head: 'http://img.duoziwang.com/2018/20/07211700202853.jpg',
             number: '90/90/90',
             sign: '2333333',
@@ -210,7 +216,8 @@
     },
     methods: {
       lightByValue(i) {
-        console.log(i)
+        console.log(i.status)
+        this.nickName(1, 5, i.status)
       },
       // 更改每页条数时触发
       handleSizeChange(val) {

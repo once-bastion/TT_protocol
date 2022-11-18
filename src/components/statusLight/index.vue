@@ -24,20 +24,35 @@
         if (shine == null) {
           this.status = 'disabled'
         }
-        if (shine === 0) {
+        if (shine == 0 || shine == 2) {
           this.status = ''
+          // debugger
         }
-        if (shine === 1) {
+        if (shine == 1) {
           this.status = 'success'
         }
-        if (shine === 2) {
-          this.status = 'warning'
-        }
-        if (shine === 3 || shine === 13) {
+        if (shine == 3 || shine == 13) {
           this.status = 'error'
         }
+        if (shine == 4) {
+          this.status = 'warning'
+        }
       }
-    }
+    },
+    watch: {
+      light(newVal, oldVal) {
+        console.log(newVal)
+        if (newVal != null) {
+          this.status = newVal
+          // debugger
+          this.showLight()
+        }
+        // this.lists = []
+        // newVal.forEach((e, index) => {
+        //   this.lists[index] = e.material_id
+        // })
+      },
+    },
   }
 </script>
 

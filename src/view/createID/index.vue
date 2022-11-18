@@ -19,7 +19,7 @@
     <el-col :span="24" style="margin-top: 60px;">
       <el-col :span="8">
         <span class="title">账号列表</span>
-        <light-btn :colors="colors" @lightByValue="statusBtn"></light-btn>
+        <light-btn :colors="btns" @lightByValue="statusBtn"></light-btn>
       </el-col>
       <el-col :span="24" style="margin: 20px 0;">
         <el-button type="primary">启用</el-button>
@@ -70,10 +70,10 @@
                   fit="cover"></el-image>
             </template>
           </el-table-column>
-<!--          <el-table-column-->
-<!--              prop="number"-->
-<!--              label="粉丝/点赞/播放">-->
-<!--          </el-table-column>-->
+          <!--          <el-table-column-->
+          <!--              prop="number"-->
+          <!--              label="粉丝/点赞/播放">-->
+          <!--          </el-table-column>-->
           <el-table-column
               prop="sign"
               label="签名">
@@ -96,6 +96,7 @@
         <el-pagination
             background
             layout="prev, pager, next"
+            :page-size="12"
             :total="total"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange">
@@ -122,7 +123,10 @@
           {value: '昵称库数量', key: '400',},
           {value: '个性签名库数量', key: '400',},
         ],
-        colors: [null, 13],
+        btns: [
+          {status: null, value: '未启用'},
+          {status: 13, value: '已禁用'},
+        ],
         tableData: [
           {
             username: '10001',
@@ -222,10 +226,11 @@
       deleteFromData(row) {
 
       },
-      handleSizeChange(){
+      handleSizeChange() {
 
       },
-      handleCurrentChange(){},
+      handleCurrentChange() {
+      },
     },
   }
 </script>

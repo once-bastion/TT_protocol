@@ -51,6 +51,7 @@
       <el-pagination
           background
           layout="prev, pager, next"
+          :page-size="12"
           :total="total"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange">

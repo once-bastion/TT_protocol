@@ -18,6 +18,8 @@ import sign from '../view/sign/index.vue'
 import video from '../view/video/index.vue'
 import taskLog from '../view/taskLog/index.vue'
 import backPermissions from '../view/backPermissions/index.vue'
+import videosPic from '../components/canvas/videosPic'
+import category from '../view/category/index.vue'
 
 const router = new Router({
   routes: [
@@ -73,6 +75,14 @@ const router = new Router({
         {
           path: '/backPermissions',
           component: backPermissions,
+        },
+        {
+          path: '/videosPic',
+          component: videosPic,
+        },
+        {
+          path: '/category',
+          component: category,
         },
       ]
     },
