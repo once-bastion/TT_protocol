@@ -349,7 +349,7 @@ html .fixed {
 /* 全局引入 滚动条 */
 ::-webkit-scrollbar {
     width: 6px !important;
-    height: 3px !important;
+    height: 5px !important;
 }
 
 ::-webkit-scrollbar-thumb {

@@ -60,7 +60,10 @@
             title: '账户管理',
             path: 'account',
             icon: 'el-icon-user-solid',
-            secondTitle: [{title: '账户管理', path: 'account'}, {title: '创建新号', path: 'createID'},]
+            secondTitle: [{title: '账户管理', path: 'account'}, {title: '创建新号', path: 'createID'}, {
+              title: '上传视频',
+              path: 'videoUpload'
+            },]
           },
           // {title: '素材管理', path: 'material', icon: 'el-icon-picture',},
           {
@@ -79,7 +82,11 @@
             title: '任务管理',
             path: 'task',
             icon: 'el-icon-s-order',
-            secondTitle: [{title: '视频发布', path: 'video'},]
+            secondTitle: [
+              {title: '视频发布', path: 'video'},
+              {title: '评论点赞', path: 'like'},
+              {title: '关注任务', path: 'attention'},
+            ]
           },
           {title: '任务日志', path: 'taskLog', icon: 'el-icon-edit',},
           {title: '后台权限', path: 'backPermissions', icon: 'el-icon-s-platform',},

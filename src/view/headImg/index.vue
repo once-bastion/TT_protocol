@@ -41,7 +41,7 @@
         <el-popconfirm title="T﹏T  确定要删除吗" @confirm="deleteFromData">
           <el-button slot="reference" type="primary" :disabled="disabled">删除</el-button>
         </el-popconfirm>
-        <el-button type="warning" style="margin-right: 30px;">离线</el-button>
+        <el-button @click="recall()" v-if="withdraw" type="warning" style="margin-right: 30px;">撤回</el-button>
         <!--        <el-input style="margin:0 30px;"-->
         <!--                  placeholder="请输入账户名称或昵称"-->
         <!--                  v-model="inputSearch"-->
@@ -96,6 +96,8 @@
             <template slot-scope="scope">
               <!--              {{scope.row.status}}-->
               <statusLight :light="parseInt(scope.row.status)"></statusLight>
+<!--              <el-button @click="recall()" v-if="scope.row.status==1" type="text" style="margin-right: 30px;">撤回-->
+<!--              </el-button>-->
             </template>
           </el-table-column>
           <el-table-column
@@ -178,12 +180,13 @@
         picList: [],
         type_id: null,
         video_url: '',
+        withdraw: false,
         // 下方搜索列表
         inputSearch: '',// 搜索框数据
         equipment: false,
         btns: [
-          {status: 1, value: '已用'},
-          {status: 2, value: '未用'}],// 1代表绿灯,2代表黄灯,3代表红灯,其余灰色
+          {status: 2, value: '已用'},
+          {status: 1, value: '未用'},],// 1代表绿灯,2代表黄灯,3代表红灯,其余灰色
         tableData: [],
         total: null, //总页数
         multipleSelection: [],
@@ -196,7 +199,7 @@
 
         //删除数据
         deleteData: [],
-        disabled:true,
+        disabled: true,
       }
     },
     mounted() {
@@ -205,7 +208,7 @@
     methods: {
       // 请求总数量
       async nickName() {
-        console.log('this.page',this.pageSize)
+        console.log('this.page', this.pageSize)
         this.$api.headImage({
             page: this.pageSize,
             limit: this.limit,
@@ -302,6 +305,7 @@
       lightByValue(i) {
         this.status = i.status
         console.log(i.status)
+        this.withdraw = i.status === 1;
         this.nickName()
       },
       // 更改每页条数时触发
@@ -317,6 +321,7 @@
       handleClick(row) {
         console.log(row);
       },
+      //删除按钮
       deleteFromData(row) {
         console.log(this.deleteData.toLocaleString())
         let headimage_ids = this.deleteData.toLocaleString()
@@ -333,6 +338,26 @@
         // .catch((error) => {
         //   this.$message.error('请求错误')
         // })
+      },
+      //撤回按钮
+      async recall() {
+        await this.headModify()
+        await setTimeout(() => {
+          this.nickName()
+        }, 1000)
+      },
+      headModify() {
+        let headimage_ids = this.deleteData.toLocaleString()
+        this.$api.headModify({
+          headimage_ids,
+        }, {
+          params: {},
+        })
+          .then((res) => {
+            console.log(res)
+            this.$message.success(res.data.msg)
+          })
+          .catch()
       },
       handleSelectionChange(val) {
         // console.log(val)

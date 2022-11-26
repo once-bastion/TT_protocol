@@ -12,14 +12,15 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 //使用ElementUI
 import config from './request/config'
+import base from './base/index'//引用
 
 Vue.use(ElementUI)
-
 Vue.prototype.$api = api
 Vue.prototype.$config_upLoad = config.url + "Base/upload"//封装上传的接口
 Vue.use(VueRouter)
 Vue.config.productionTip = false
 
+Vue.use(base);//将全局函数当做插件来进行注册
 new Vue({
   render: h => h(App),
   router: router

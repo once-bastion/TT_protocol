@@ -7,13 +7,22 @@
         <el-button slot="reference" style="margin-left: 10px" type="text" :disabled="delDisabled">删除</el-button>
       </el-popconfirm>
       当前已选择 {{xx}} 个视频，选择发布请进入 视频发布 页面
+      <div class="scrollable-x tops01" @click="released()" v-if="$route.path === '/usersVideo'">
+        视频任务名称：
+        <el-input v-model="titleInput" clearable style="width: 200px;margin-right: 20px;"></el-input>
+        视频描述：
+        <el-input v-model="titleInput" type="textarea" clearable style="width: 200px;margin-right: 20px;"></el-input>
+        <el-button type="primary">发布按钮</el-button>
+      </div>
     </el-col>
-    <el-col :span="24">
+
+    <el-col :span="24" style="min-height: 1000px;">
       <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
         <!--图像显示区域-->
 
         <div class="checkbox">
-          <el-checkbox v-for="(i,index) in infos" :label="i" :key="i.material_id" style="margin-bottom: 10px">
+          <el-checkbox v-for="(i,index) in infos" :label="i.material_id" :key="i.material_id"
+                       style="margin-bottom: 10px;max-height:700px;">
             <div style="">
               <div class="infoList">
                 <span>视频编号：{{i.video_num}}</span>
@@ -30,7 +39,7 @@
       <el-pagination
           background
           layout="prev, pager, next"
-          :page-size="limit"
+          :page-size="12"
           :total="total"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange">
@@ -41,9 +50,8 @@
         title="视频内容"
         :visible.sync="dialogVisible"
         width="30%"
-        :before-close="handleClose" :on-success="handleAvatarSuccess">
-      <!--   视频内容   -->
-      <vue-core-video-player loop :src="source" :cover="cover" :title="title" autoplay></vue-core-video-player>
+        :before-close="handleClose"
+        :on-success="handleAvatarSuccess">
     </el-dialog>
   </div>
 </template>
@@ -55,7 +63,7 @@
 
   export default {
     name: "videoList",
-    components: {VideoPlayer,},
+    components: {VideoPlayer, VueCoreVideoPlayer},
     props: {
       infos: Array,
       total: Number,
@@ -72,22 +80,26 @@
         delDisabled: true,
         deleteData: [],//需要删除的
         dialogVisible: false,
-        limit: 12,
         //视频模块数据-----------------
         source: '',
         title: '',
         cover: 'cover',
+
+        //发布数据
+        titleInput: '',
+        options: [],
+        value: '',
       }
     },
     created() {
-      console.log(this.total)
+      console.log(this.infos)
     },
     methods: {
       handleCheckAllChange(val) {
         this.checkedCities = val ? this.lists : [];
         this.delDisabled = !val;
         this.isIndeterminate = false;
-        // console.log(this.lists)
+        console.log(this.lists)
         this.deleteData = this.lists
         // console.log(this.lists.length)
       },
@@ -133,21 +145,19 @@
         })
         let material_ids = this.deleteData.toLocaleString()
         this.$emit('remove', material_ids)
-      }
+      },
+      released(){
+      },
     },
     watch: {
       infos(newVal, oldVal) {
-        console.log(newVal)
-        //     // this.lists = []
-        //     // newVal.forEach((e, index) => {
-        //     //   this.lists[index] = e
-        //     // })
-        //     // console.log(this.lists)
-      },
-      // total(newVal, oldVal) {
-      //   console.log(newVal)
-      //   this.total = newVal//规定页码
-      // }
+        // console.log(newVal)
+        this.lists = []
+        newVal.forEach((e, index) => {
+          this.lists[index] = e.material_id
+        })
+        // console.log(this.lists)
+      }
     }
   }
 </script>
@@ -156,9 +166,10 @@
 
 
   .checkbox {
-    /*position: absolute;*/
-    /*top: 65px;*/
-    /*margin-bottom: 390px;*/
+    width: 88vw;
+    position: absolute;
+    top: 65px;
+    margin-bottom: 390px;
 
     .infoList {
       height: 440px;
@@ -169,9 +180,15 @@
   }
 
   .pics {
-    width: 205px;
+    width: 207px;
     height: 368px;
     border: 10px solid #ccc;
-    margin: 10px 0 0 0;
+    margin: 10px 35px 50px 0;
+    z-index: 2;
+  }
+
+  .tops01 {
+    float: right;
+    align-items: center;
   }
 </style>

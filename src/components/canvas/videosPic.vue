@@ -13,9 +13,10 @@
       </el-form-item>
 
       <el-form-item class="upload-demo-content" v-show="formLabelAlign.type==2">
-        <el-upload class="upload-demo" :on-exceed="exceedhandle" drag multiple :file-list="filsListArray"
-                   :action="this.$config_upLoad" :on-success="successuploadhandle" accept="video" name="fileList"
-                   :before-upload="beforeUploadVideo">
+        <el-upload
+            class="upload-demo" :on-exceed="exceedhandle" drag multiple :file-list="filsListArray"
+            :action="this.$config_upLoad" :on-success="successuploadhandle" accept="video" name="fileList"
+            :before-upload="beforeUploadVideo">
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将视频文件拖到此处，或
             <em>点击上传</em>
@@ -47,7 +48,7 @@
       successuploadhandle(response, file, fileList) {
         this.formLabelAlign.video = this.modlevidel =
           response.data.fileList[0].url;
-        debugger
+        // debugger
         this.filsListArray = [];
         this.filsListArray.push({
           name: this.formLabelAlign.video,

@@ -24,11 +24,11 @@
         if (shine == null) {
           this.status = 'disabled'
         }
-        if (shine == 0 || shine == 2) {
+        if (shine == 0 || shine == 1) {
           this.status = ''
           // debugger
         }
-        if (shine == 1) {
+        if (shine == 2) {
           this.status = 'success'
         }
         if (shine == 3 || shine == 13) {

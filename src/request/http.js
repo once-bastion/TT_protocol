@@ -54,12 +54,20 @@ axios.interceptors.response.use(
         // 对响应数据做点什么
         if (response.status === 200) {
             // console.log(response.data)
+          // 接口请求错误 1
             if (response.data.status!=='200'){
                 MessageBox.alert(response.data.msg, '错误', {
                     confirmButtonText: "确定",
                     type: "error",
                 })
             }
+          // 接口请求错误 2
+          // if (response.data.status!=='200'){
+          //       MessageBox.alert(response, '错误', {
+          //           confirmButtonText: "确定",
+          //           type: "error",
+          //       })
+          //   }
             // if (response.data.code != 0) {
             //     MessageBox.alert(response.data.msg, '错误', {
             //         confirmButtonText: "确定",
@@ -86,13 +94,14 @@ axios.interceptors.response.use(
             //         router.replace("/login");
             //     }
             // }
-        } else {
-            // 获取成功后的错误提示
-            MessageBox.alert('系统错误', '错误', {
-                confirmButtonText: "确定",
-                type: "error",
-            })
         }
+        // else {
+        //     // 获取成功后的错误提示
+        //     MessageBox.alert('系统错误', '错误', {
+        //         confirmButtonText: "确定",
+        //         type: "error",
+        //     })
+        // }
 
 
         return response;

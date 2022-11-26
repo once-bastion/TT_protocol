@@ -16,10 +16,18 @@ import headImg from '../view/headImg/index.vue'
 import nickName from '../view/nickName/index.vue'
 import sign from '../view/sign/index.vue'
 import video from '../view/video/index.vue'
+import usersVideo from '../view/video/components/usersVideo.vue'
+import showInfo from '../view/video/showInfo.vue'
+import videoTaskDetails from '../view/video/videoTaskDetails.vue'
 import taskLog from '../view/taskLog/index.vue'
 import backPermissions from '../view/backPermissions/index.vue'
 import videosPic from '../components/canvas/videosPic'
 import category from '../view/category/index.vue'
+import focus from '../view/focus/index.vue'
+import fans from '../view/fans/index.vue'
+import videoUpload from '../view/videoUpload/index.vue'
+import like from '../view/like/index.vue'
+import attention from '../view/attention/index.vue'
 
 const router = new Router({
   routes: [
@@ -69,6 +77,18 @@ const router = new Router({
           component: video,
         },
         {
+          path: '/usersVideo',
+          component: usersVideo,
+        },
+        {
+          path: '/showInfo',
+          component: showInfo,
+        },
+        {
+          path: '/videoTaskDetails',
+          component: videoTaskDetails,
+        },
+        {
           path: '/taskLog',
           component: taskLog,
         },
@@ -83,6 +103,30 @@ const router = new Router({
         {
           path: '/category',
           component: category,
+        },
+        {
+          path: '/focus',
+          component: focus,
+        },
+        {
+          path: '/fans',
+          component: fans,
+        },
+        {
+          path: '/videoUpload',
+          component: videoUpload,
+        },
+        {
+          path: '/like',
+          component: like,
+        },
+        {
+          path: '/attention',
+          component: attention,
+        },
+        {
+          path: '/attention',
+          component: attention,
         },
       ]
     },

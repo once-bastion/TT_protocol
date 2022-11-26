@@ -106,7 +106,7 @@
         </el-select>
         <br/>
         输入类别名：
-        <el-input v-model="input_type"></el-input>
+        <el-input v-model="input_type" clearable></el-input>
       </div>
       <div v-if="revoke">
         <el-table
