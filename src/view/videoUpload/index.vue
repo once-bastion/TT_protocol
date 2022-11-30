@@ -210,8 +210,11 @@
       this.getMember()
     },
     methods: {
-      getMember() {
-        this.$api.member({},
+      getMember(page) {
+        this.$api.member({
+          page,
+          limit:this.pageSize,
+          },
           {
             params: {},
           })
@@ -242,7 +245,8 @@
       },
       handleSizeChange() {
       },
-      handleCurrentChange() {
+      handleCurrentChange(val) {
+        this.getMember(val)
       },
       handleClick() {
         this.dialogVisible = true

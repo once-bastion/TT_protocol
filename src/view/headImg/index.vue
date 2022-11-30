@@ -193,7 +193,7 @@
 
         //默认访问页面表格的参数
         pageSize: 1,
-        limit: 18,
+        limit: 5,
         typecontrol_id: '',
         status: null,
 

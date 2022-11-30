@@ -1,44 +1,48 @@
 <template>
   <el-container>
-    <el-header>
-      <div class="logo">
-        <div>TT</div>
-        <strong> 智能云控</strong>
-      </div>
-      <div class="user">
-        管理员:{{username}}
-      </div>
-    </el-header>
+    <el-aside :width="isCollapse==true?'75px':'200px'">
+      <el-menu
+          :router="true"
+          :default-active="activeIndex"
+          :unique-opened="true"
+          class="el-menu-vertical-demo"
+          background-color="#304156"
+          text-color="#fff" :collapse="isCollapse" :collapse-transition="false"
+          @open="handleOpen"
+          @close="handleClose">
+        <!-- 如果是单1级标题 -->
+        <div v-for="(i,index) in fromList">
+          <el-menu-item v-if="!(i.secondTitle)" :index="i.path">
+            <i :class="i.icon" style="font-size: 22px;padding-left: 5px;"></i>
+            <span slot="title">{{i.title}}</span>
+          </el-menu-item>
+          <!-- 如果是单2级标题 -->
+          <el-submenu v-if="(i.secondTitle)" :index="i.path">
+            <template slot="title">
+              <i :class="i.icon" style="font-size: 22px;margin-left: 5px;"></i>
+              <span v-show="isCollapse===false">{{i.title}}</span>
+            </template>
+            <el-menu-item-group v-if="i.secondTitle" v-for="(item,index) in i.secondTitle">
+              <el-menu-item :index="item.path">{{item.title}}</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+        </div>
+      </el-menu>
+    </el-aside>
     <el-container>
-      <el-aside width="200px">
-        <el-menu
-            :router="true"
-            :default-active="activeIndex"
-            :unique-opened="true"
-            class="el-menu-vertical-demo"
-            background-color="#545c64"
-            text-color="#fff"
-            @open="handleOpen"
-            @close="handleClose">
-          <!-- 如果是单1级标题 -->
-          <div v-for="(i,index) in fromList">
-            <el-menu-item v-if="!(i.secondTitle)" :index="i.path">
-              <i :class="i.icon"></i>
-              <span slot="title">{{i.title}}</span>
-            </el-menu-item>
-            <!-- 如果是单2级标题 -->
-            <el-submenu v-if="(i.secondTitle)" :index="i.path">
-              <template slot="title">
-                <i :class="i.icon"></i>
-                <span>{{i.title}}</span>
-              </template>
-              <el-menu-item-group v-if="i.secondTitle" v-for="(item,index) in i.secondTitle">
-                <el-menu-item :index="item.path">{{item.title}}</el-menu-item>
-              </el-menu-item-group>
-            </el-submenu>
-          </div>
-        </el-menu>
-      </el-aside>
+      <el-header>
+        <div class="logo">
+          <div class="el-icon-s-fold" v-show="isCollapse===false" @click="isCollapse=true"></div>
+          <div class="el-icon-s-unfold" v-show="isCollapse===true" @click="isCollapse=false"></div>
+          <!--          <div>TT</div>-->
+          <!--          <strong> 智能云控</strong>-->
+        </div>
+        <div class="user">
+          管理员:{{username}}
+          <img style="width: 45px;height: 45px;border-radius: 10px" src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif?imageView2/1/w/80/h/80" class="user-avatar">
+          <i class="el-icon-caret-bottom"></i>
+        </div>
+      </el-header>
       <el-main>
         <router-view/>
       </el-main>
@@ -51,7 +55,7 @@
     name: "home",
     data() {
       return {
-        username: 'admin',
+        username: 'admin', isCollapse: false,
         activeIndex: this.$route.path.split('/')[1],
         fromList: [
           {title: '首页', path: 'home', icon: 'el-icon-s-home',},
@@ -109,13 +113,14 @@
 
 <style lang="less" scoped>
   .el-header {
-    background-color: #494e58;
+    /*background-color: #494e58;*/
     color: #FFF;
     font-size: 40px;
     line-height: 60px;
     display: flex;
-    align-items: center;
+    /*align-items: center;*/
     justify-content: space-between;
+    border-bottom: 1px solid #e5e9f2;
 
     .logo {
       display: flex;
@@ -123,8 +128,8 @@
 
       div {
         border-radius: 50%;
-        color: #fff;
-        background-color: #ff0000;
+        color: #304156;
+        /*background-color: #ff0000;*/
         font-size: 30px;
         width: 50px;
         height: 50px;
@@ -140,12 +145,13 @@
     }
 
     .user {
+      color: #7a7a7a;
       font-size: 20px;
     }
   }
 
   .el-aside {
-    background-color: #545c64;
+    background-color: #304156;
 
     .el-menu {
       border-right: 0;
@@ -158,4 +164,8 @@
     background-color: #f9f9f9;
   }
 
+  .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
+  }
 </style>

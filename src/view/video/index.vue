@@ -7,7 +7,9 @@
     <el-col :span="24">
       <div class="title01">选择设备</div>
       <div class="title01_onece">（仅展示当前在线设备和在线账户。先勾选设备再选择账户）</div>
-      <div>点击前往 <el-link class="head" @click="$router.push('/showInfo')" type="primary"> 结果页面</el-link></div>
+      <div>点击前往
+        <el-link class="head" @click="$router.push('/showInfo')" type="primary"> 结果页面</el-link>
+      </div>
     </el-col>
     <!--表格-->
     <el-col :span="24">
@@ -16,14 +18,14 @@
           :data="tableData"
           @selection-change="handleSelectionChange"
           style="width: 100%;margin-top:30px">
-<!--        <el-table-column-->
-<!--            type="selection"-->
-<!--            width="55">-->
-<!--        </el-table-column>-->
+        <!--        <el-table-column-->
+        <!--            type="selection"-->
+        <!--            width="55">-->
+        <!--        </el-table-column>-->
         <!--   <el-table-column-->
-<!--            type="selection"-->
-<!--            width="55">-->
-<!--        </el-table-column>-->
+        <!--            type="selection"-->
+        <!--            width="55">-->
+        <!--        </el-table-column>-->
         <!--        <el-table-column-->
         <!--            prop="uid"-->
         <!--            label="唯一ID"-->
@@ -110,7 +112,7 @@
         <!--        </el-table-column>-->
         <el-table-column
             prop="signature"
-            label="签名">
+            label="昵称">
         </el-table-column>
         <el-table-column
             label="操作"
@@ -153,9 +155,9 @@
       return {
         tableData: [],
         textarea: '',
-        limit: 12,
+        limit: 10,
         total: null,
-        page:1,
+        page: 1,
       }
     },
     mounted() {
@@ -166,7 +168,10 @@
         this.getImgs('', '', '', pageVal, 12)
       },
       async getMember() {
-        this.$api.member({},
+        this.$api.member({
+            page: this.page,
+            limit: this.limit,
+          },
           {
             params: {},
           })
@@ -205,10 +210,12 @@
       // 页码改变时触发
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
+        this.page = val
+        this.getMember()
       },
-      handleClick(n){
+      handleClick(n) {
         console.log(n)
-        this.$router.push({path:'/usersVideo',query:{uid:n}})
+        this.$router.push({path: '/usersVideo', query: {uid: n}})
       },
     },
 

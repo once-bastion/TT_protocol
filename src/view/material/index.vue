@@ -13,9 +13,9 @@
       <div style="margin-top: 20px;">
         <el-col :span="6">
           <strong class="title01">根据时间排序：</strong>
-          <el-button @click="getImgs('add_time','asc','',1,12)" size="mini" round icon="el-icon-arrow-down">升序
+          <el-button @click="getImgs('add_time','asc','',1,10)" size="mini" round icon="el-icon-arrow-down">升序
           </el-button>
-          <el-button @click="getImgs('add_time','desc','',1,12)" size="mini" round icon="el-icon-arrow-up">降序
+          <el-button @click="getImgs('add_time','desc','',1,10)" size="mini" round icon="el-icon-arrow-up">降序
           </el-button>
         </el-col>
         <!--  种类选择的下拉框  -->
@@ -91,7 +91,7 @@
       }
     },
     mounted() {
-      this.getImgs('', '', '', 1, 12)
+      this.getImgs('', '', '', 1, 10)
 
       // console.log(this.$config_upLoad)
     },
@@ -121,7 +121,7 @@
       },
       async sure() { // 确定按钮
         await this.upLoadAdd()
-        await this.getImgs('', '', '', 1, 12)
+        await this.getImgs('', '', '', 1, 10)
       },
       async upLoadAdd() {
         console.log(!this.type_id)
@@ -236,7 +236,7 @@
           })
       },
       async pageChange(pageVal) {
-        this.getImgs('', '', '', pageVal, 12)
+        this.getImgs('', '', '', pageVal, 10)
       },
       visible() {
         this.dialogVisible = true

@@ -17,6 +17,12 @@
     </div>
 
     <div class="inputs">
+      <span>unique_id：</span>
+      <el-input v-model="u_id" clearable></el-input>
+      <el-button :icon="icon4" type="primary" style="margin-left: 10px;" @click="save(4)">修改</el-button>
+    </div>
+
+    <div class="inputs">
       <span>头像：</span>
       <el-upload
           class="upload-demo"
@@ -48,11 +54,13 @@
         nike_name: '',
         password: '',
         signature: '',
+        u_id:'',
 
         pic: '',
         icon1: 'el-icon-edit',
         icon2: 'el-icon-edit',
         icon3: 'el-icon-edit',
+        icon4: 'el-icon-edit',
       }
     },
     mounted() {
@@ -91,6 +99,14 @@
           } else {
             this.icon3 = 'el-icon-loading'
           this.updateData03(type)
+          }
+        }
+        if (type === 4) {
+          if (!this.u_id) {
+            this.$confirm('请完成上述操作')
+          } else {
+            this.icon4 = 'el-icon-loading'
+          this.updateData04(type)
           }
         }
       },
@@ -150,6 +166,24 @@
           .catch((error) => {
             this.$message.error('请求错误')
           })
+      },
+      updateData04(type) {
+        this.$api.memberUpdate({
+            type,
+            // nickname: this.nike_name,
+            unique_id: this.u_id,
+            member_id: this.member_id,
+          },
+          {
+            params: {},
+          })
+          .then((res) => {
+            // this.$message.success('修改成功')
+            this.icon4 = 'el-icon-edit'
+          })
+        // .catch((error) => {
+        //   this.$message.error('请求错误')
+        // })
       },
     },
     watch: {

@@ -76,7 +76,7 @@
         <!--        </el-table-column>-->
         <el-table-column
             prop="nickname"
-            label="昵称"
+            label="名称"
             width="80">
           <template slot-scope="scope">
             <el-link type="info" @click="toLink(scope.row.unique_id)">{{scope.row.nickname}}</el-link>
@@ -134,7 +134,7 @@
         </el-table-column>
         <el-table-column
             prop="signature"
-            label="签名">
+            label="个人简介">
         </el-table-column>
         <el-table-column
             label="视频"
@@ -224,7 +224,7 @@
       }
     },
     mounted() {
-      this.getMember()
+      this.getMember(1,)
     },
     methods: {
       toLink(n) {
@@ -241,6 +241,7 @@
       // 页码改变时触发
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
+        this.getMember(val)
       },
       handleClick(row, n) {
         console.log(row, n)
@@ -307,8 +308,11 @@
       operation(val) {
         console.log(val)
       },
-      getMember() {
-        this.$api.member({},
+      getMember(page) {
+        this.$api.member({
+          page,
+          limit:this.pageSize,
+          },
           {
             params: {},
           })
